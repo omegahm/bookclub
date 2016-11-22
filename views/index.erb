@@ -7,6 +7,17 @@
     <title>Bogklub&trade; bøger</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="icon" type="image/png" href="book.ico">
+
+    <style>
+      @media screen and (max-width: 767px) {
+        .truncate {
+          width: 300px;;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          }
+        }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -37,7 +48,7 @@
                       </td>
                       <td>
                         <a href="http://www.goodreads.com<%= book[:link] %>">
-                          <%= book[:title] %>
+                          <div class="truncate"><%= book[:title] %></div>
                         </a>
                       </td>
                       <td>
