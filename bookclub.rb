@@ -43,6 +43,7 @@ get '/' do
   book_lines.drop(1).each do |bl|
     shelf = bl.css('td:nth(5) a').text()
     book = {
+      img:         bl.css('td:nth(1) a img')[0]['src'],
       link:        bl.css('td:nth(2) a')[0]['href'],
       title:       bl.css('td:nth(2) a')[0].text(),
       author:      bl.css('td:nth(3) a').text(),

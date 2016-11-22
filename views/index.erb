@@ -21,7 +21,7 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th>Title</th>
+                    <th colspan="2">Title</th>
                     <th>Author</th>
                     <% unless category[:key] == 'to-read' %>
                     <th>Date chosen</th>
@@ -34,6 +34,9 @@
                 <tbody>
                   <% @shelves[category[:key]].each do |book| %>
                     <tr>
+                      <td>
+                        <img src="<%= book[:img] %>">
+                      </td>
                       <td>
                         <a href="http://www.goodreads.com<%= book[:link] %>">
                           <%= book[:title] %>
