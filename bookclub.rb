@@ -6,6 +6,7 @@ require './config/goodreads'
 
 require 'nokogiri'
 require 'open-uri'
+require 'date'
 
 set server: 'thin'
 register Sinatra::Reloader
@@ -40,13 +41,26 @@ get '/' do
   }
 
   book_lines.drop(1).each do |bl|
-    @shelves[bl.css('td:nth(5) a').text()] ||= []
-    @shelves[bl.css('td:nth(5) a').text()] << {
-      link:   bl.css('td:nth(2) a')[0]['href'],
-      title:  bl.css('td:nth(2) a').text(),
-      author: bl.css('td:nth(3) a').text()
+    shelf = bl.css('td:nth(5) a').text()
+    book = {
+      link:        bl.css('td:nth(2) a')[0]['href'],
+      title:       bl.css('td:nth(2) a')[0].text(),
+      author:      bl.css('td:nth(3) a').text(),
+      author_link: bl.css('td:nth(3) a')[0]['href']
     }
+
+    begin
+      book[:date_chosen]    = Date.parse(bl.css('td:nth(6)').text())
+      book[:date_discussed] = Date.parse(bl.css('td:nth(7)').text())
+    rescue
+      # nop
+    end
+
+    @shelves[shelf] << book
   end
+
+  @shelves['to-read'] = @shelves['to-read'].shuffle
+  @shelves['read']    = @shelves['read'].sort_by { |book| book[:date_chosen] }.reverse
 
   erb :index
 end

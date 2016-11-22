@@ -23,10 +23,16 @@
                   <tr>
                     <th>Title</th>
                     <th>Author</th>
+                    <% unless category[:key] == 'to-read' %>
+                    <th>Date chosen</th>
+                    <% end %>
+                    <% if category[:key] == 'read' %>
+                    <th>Date discussed</th>
+                    <% end %>
                   </tr>
                 </thead>
                 <tbody>
-                  <% @shelves[category[:key]].sort_by { |book| book[:title] }.each do |book| %>
+                  <% @shelves[category[:key]].each do |book| %>
                     <tr>
                       <td>
                         <a href="http://www.goodreads.com<%= book[:link] %>">
@@ -34,10 +40,16 @@
                         </a>
                       </td>
                       <td>
-                        <a href="http://www.goodreads.com<%= book[:link] %>">
+                        <a href="http://www.goodreads.com<%= book[:author_link] %>">
                           <%= book[:author] %>
                         </a>
                       </td>
+                      <% unless category[:key] == 'to-read' %>
+                        <td><%= book[:date_chosen] %></td>
+                      <% end %>
+                      <% if category[:key] == 'read' %>
+                        <td><%= book[:date_discussed] %></td>
+                      <% end %>
                     </tr>
                   <% end %>
                 </tbody>
