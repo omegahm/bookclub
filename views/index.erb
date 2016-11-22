@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Bogklub&trade; bøger</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <% @categories.each do |category| %>
+          <div class="col-xs-12" style="margin-top: 3rem;">
+            <div class="panel panel-default panel-<%= category[:color] %>">
+              <div class="panel-heading">
+                <div class="panel-title"><%= category[:title] %></div>
+              </div>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @shelves[category[:key]].sort_by { |book| book[:title] }.each do |book| %>
+                    <tr>
+                      <td>
+                        <a href="http://www.goodreads.com<%= book[:link] %>">
+                          <%= book[:title] %>
+                        </a>
+                      </td>
+                      <td>
+                        <a href="http://www.goodreads.com<%= book[:link] %>">
+                          <%= book[:author] %>
+                        </a>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </body>
+</html>
