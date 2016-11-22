@@ -4,6 +4,7 @@ GEM
     backports (3.6.8)
     daemons (1.1.9)
     eventmachine (1.0.4)
+    kgio (2.10.0)
     mini_portile2 (2.1.0)
     multi_json (1.12.1)
     nokogiri (1.6.8.1)
@@ -13,6 +14,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    raindrops (0.17.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -29,6 +31,9 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     tilt (2.0.5)
+    unicorn (5.2.0)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -38,6 +43,7 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   thin
+  unicorn
 
 BUNDLED WITH
    1.13.6
