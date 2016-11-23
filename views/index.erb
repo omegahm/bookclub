@@ -5,18 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Bogklub&trade; bøger</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+
     <link rel="icon" type="image/png" href="book.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     <style>
+      * {
+        font-family: 'Ubuntu', sans-serif;
+      }
+
+      .table {
+        border: 1px solid #ddd;
+      }
+
+      .alert-table {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        border-bottom: 0;
+        margin-bottom: 0;
+      }
+
+      .alert {
+        border-color: #ddd;
+      }
+
       @media screen and (max-width: 767px) {
         .truncate {
           width: 300px;;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          }
         }
+      }
     </style>
   </head>
   <body>
@@ -24,7 +45,7 @@
       <div class="row">
         <% @categories.each do |category| %>
           <div class="col-xs-12" style="margin-top: 3rem;">
-            <h1 class="alert alert-<%= category[:color] %>"><%= category[:title] %></h1>
+            <h1 class="alert alert-table alert-<%= category[:color] %>"><%= category[:title] %></h1>
 
             <div class="table-responsive">
               <table class="table table-striped">
