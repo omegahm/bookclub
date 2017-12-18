@@ -50,13 +50,17 @@ get '/' do
       author_link: bl.css('td:nth(3) a')[0]['href']
     }
 
-    begin
-      book[:date_chosen]    = Date.parse(bl.css('td:nth(6)').text())
-      book[:date_discussed] = Date.parse(bl.css('td:nth(7)').text())
+    book[:date_chosen] = begin
+      Date.parse(bl.css('td:nth(6)').text())
     rescue
-      # nop
+      Date.new
     end
 
+    book[:date_discussed] = begin
+      Date.parse(bl.css('td:nth(7)').text())
+    rescue
+      Date.new
+    end
     @shelves[shelf] << book
   end
 

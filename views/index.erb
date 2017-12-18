@@ -78,10 +78,22 @@
                         </a>
                       </td>
                       <% unless category[:key] == 'to-read' %>
-                        <td class="text-right"><%= book[:date_chosen] %></td>
+                        <td class="text-right">
+                          <% if book[:date_chosen] == Date.new %>
+                            ???
+                          <% else %>
+                            <%= book[:date_chosen] %>
+                          <% end %>
+                        </td>
                       <% end %>
                       <% if category[:key] == 'read' %>
-                        <td class="text-right"><%= book[:date_discussed] %></td>
+                        <td class="text-right">
+                          <% if book[:date_discussed] == Date.new %>
+                            ???
+                          <% else %>
+                            <%= book[:date_discussed] %>
+                          <% end %>
+                        </td>
                       <% end %>
                     </tr>
                   <% end %>
