@@ -7,7 +7,7 @@
     <title>Bogklub&trade; bøger</title>
 
     <link rel="icon" type="image/png" href="book.ico">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 
     <style>
@@ -15,94 +15,87 @@
         font-family: 'Ubuntu', sans-serif;
       }
 
-      .table {
-        border: 1px solid #ddd;
+      body {
+        padding-top: 50px;
       }
 
-      .alert-table {
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-        border-bottom: 0;
-        margin-bottom: 0;
+      .book-card {
+        width: 360px;
       }
 
-      .alert {
-        border-color: #ddd;
+      .card-text-footer {
+        position: absolute;
+        bottom: 10px;
       }
 
-      @media screen and (max-width: 767px) {
-        .truncate {
-          width: 300px;;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+      .card-img {
+        max-height: 220px;
+        border-radius: 0;
+      }
+
+      @media (min-width: 320px) and (max-width: 768px) {
+        body {
+          padding-top: 5px;
+        }
+
+        .card-img {
+          padding-left: 1.25rem;
+          padding-top: 1.25rem;
+          max-width: 100px;
+        }
+
+        .card-body {
+          padding-bottom: 0;
         }
       }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="row">
-        <% @categories.each do |category| %>
-          <div class="col-xs-12" style="margin-top: 3rem;">
-            <h1 class="alert alert-table alert-<%= category[:color] %>"><%= category[:title] %></h1>
+      <% @categories.each do |category| %>
+        <h1 class="alert alert-<%= category[:color] %>"><%= category[:title] %></h1>
 
-            <div class="table-responsive">
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th colspan="2">Title</th>
-                    <th>Author</th>
-                    <% unless category[:key] == 'to-read' %>
-                    <th class="text-right" nowrap>Date chosen</th>
-                    <% end %>
-                    <% if category[:key] == 'read' %>
-                    <th class="text-right" nowrap>Date discussed</th>
-                    <% end %>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% @shelves[category[:key]].each do |book| %>
-                    <tr>
-                      <td>
-                        <img src="<%= book[:img] %>">
-                      </td>
-                      <td>
-                        <a href="http://www.goodreads.com<%= book[:link] %>">
-                          <div class="truncate"><%= book[:title] %></div>
-                        </a>
-                      </td>
-                      <td>
-                        <a href="http://www.goodreads.com<%= book[:author_link] %>">
-                          <%= book[:author] %>
-                        </a>
-                      </td>
-                      <% unless category[:key] == 'to-read' %>
-                        <td class="text-right">
-                          <% if book[:date_chosen] == Date.new %>
-                            ???
-                          <% else %>
-                            <%= book[:date_chosen] %>
+        <% @shelves[category[:key]].each_slice(@mobile.nil? ? 3 : 1) do |books| %>
+          <div class="d-flex justify-content-around">
+            <% books.each do |book| %>
+              <div class="card mb-3 book-card">
+                <div class="row no-gutters">
+                  <div class="col-md-5">
+                    <a href="<%= book[:link] %>">
+                      <img src="<%= book[:img] %>" class="card-img" />
+                    </a>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="card-body">
+                      <h6 class="card-title">
+                        <a href="<%= book[:link] %>"><%= book[:title] %></a>
+                      </h6>
+
+                      <p class="card-text">
+                        <small>
+                          Skrevet af
+                          <em><a href="<%= book[:author_link] %>"><%= book[:author] %></a></em>
+                        </small>
+                      </p>
+
+                      <p class="card-text card-text-footer">
+                        <small class="text-muted">
+                          <% if category[:key] == 'to-read' && book[:date_chosen] != Date.new %>
+                            <span class="badge badge-info">Valgt <%= book[:date_chosen] %></span>
                           <% end %>
-                        </td>
-                      <% end %>
-                      <% if category[:key] == 'read' %>
-                        <td class="text-right">
-                          <% if book[:date_discussed] == Date.new %>
-                            ???
-                          <% else %>
-                            <%= book[:date_discussed] %>
+                          <% if category[:key] == 'read' && book[:date_discussed] != Date.new %>
+                            <span class="badge badge-success">Diskuteret <%= book[:date_discussed] %></span>
                           <% end %>
-                        </td>
-                      <% end %>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
+                        </small>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
           </div>
         <% end %>
-      </div>
+      <% end %>
     </div>
   </body>
 </html>

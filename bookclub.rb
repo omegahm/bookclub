@@ -19,17 +19,17 @@ get '/' do
   @categories = [
     {
       key:   'currently-reading',
-      title: 'Currently reading',
+      title: 'Igangværende',
       color: 'info'
     },
     {
       key:   'to-read',
-      title: 'To read',
+      title: 'Fremtidige bøger',
       color: 'warning',
     },
     {
       key:   'read',
-      title: 'Read',
+      title: 'Læst',
       color: 'success'
     }
   ]
@@ -43,11 +43,11 @@ get '/' do
   book_lines.drop(1).each do |bl|
     shelf = bl.css('td:nth(5) a').text()
     book = {
-      img:         bl.css('td:nth(1) a img')[0]['src'],
-      link:        bl.css('td:nth(2) a')[0]['href'],
+      img:         bl.css('td:nth(1) a img')[0]['src'].sub(/(\d+)s/, '\1l'),
+      link:        "https://www.goodreads.com#{bl.css('td:nth(2) a')[0]['href']}",
       title:       bl.css('td:nth(2) a')[0].text(),
-      author:      bl.css('td:nth(3) a').text(),
-      author_link: bl.css('td:nth(3) a')[0]['href']
+      author:      bl.css('td:nth(3) a').text().sub(/(.*), (.*)/, '\2 \1'),
+      author_link: "https://www.goodreads.com#{bl.css('td:nth(3) a')[0]['href']}",
     }
 
     book[:date_chosen] = begin
@@ -66,6 +66,8 @@ get '/' do
 
   @shelves['to-read'] = @shelves['to-read'].shuffle
   @shelves['read']    = @shelves['read'].sort_by { |book| book[:date_chosen] }.reverse
+
+  @mobile = request.env['X_MOBILE_DEVICE']
 
   erb :index
 end
