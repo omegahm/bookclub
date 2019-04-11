@@ -1,0 +1,3 @@
+---
+server_url: https://598f9590721745d3b3ef8675a877c254.apm.eu-central-1.aws.cloud.es.io:443
+secret_token: <%= ENV["ELASTIC_BOOKCLUB_SECRET_TOKEN"] %>

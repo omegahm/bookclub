@@ -8,3 +8,6 @@ gem 'rack-mobile-detect'
 gem 'thin'
 gem 'unicorn'
 gem 'nokogiri'
+
+gem 'elastic-apm'
+gem 'dotenv'
