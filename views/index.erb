@@ -33,6 +33,11 @@
         border-radius: 0;
       }
 
+      table td {
+        font-size: 12.8px;
+        padding: 2px;
+      }
+
       @media (min-width: 320px) and (max-width: 768px) {
         body {
           padding-top: 5px;
@@ -75,6 +80,20 @@
                         <small>
                           Skrevet af
                           <em><a href="<%= book[:author_link] %>"><%= book[:author] %></a></em>
+                        </small>
+                        <br>
+
+                        <small>
+                          <table>
+                            <tbody>
+                              <% book[:ratings].each do |name, rating| %>
+                                <tr>
+                                  <td><%= name %></td>
+                                  <td><%= rating == '0' ? 'ikke angivet' : rating.to_i.times.map { "⭐️" }.join %></td>
+                                </tr>
+                              <% end %>
+                            </tbody>
+                          </table>
                         </small>
                       </p>
 
