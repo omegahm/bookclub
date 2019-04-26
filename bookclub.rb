@@ -3,6 +3,8 @@ require 'sinatra'
 require 'sinatra/reloader'
 
 require './config/goodreads'
+require 'dalli'
+dc = Dalli::Client.new('localhost:11211', namespace: 'bookclub_v1', compress: true)
 
 require 'nokogiri'
 require 'open-uri'

@@ -11,3 +11,6 @@ gem 'nokogiri'
 
 gem 'elastic-apm'
 gem 'dotenv'
+
+gem 'foreman'
+gem 'dalli'
